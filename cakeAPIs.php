@@ -151,7 +151,7 @@ $cart = new Cart($conn);
 //get cart api
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'get_cart_data') {
     header('Content-Type: application/json');
-    echo json_encode($cart->getAll());
+    echo json_encode($cart->getCartData());
 }
 
 //add cart api
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
         }
     }
 
-    $id = $cart->add($data);
+    $id = $cart->addCart($data);
 
     if ($id !== false) {
         http_response_code(201);
@@ -188,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT' && isset($_GET['action']) && $_GET['act
     }
 
     try {
-        $cart->update($data['cart_id'], $data);
+        $cart->updateCart($data['cart_id'], $data);
         http_response_code(200);
         echo json_encode(array("message" => "Cart item updated."));
     } catch (Exception $e) {
@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE' && isset($_GET['action']) && $_GET['
     }
 
     $cart_id = $_GET['id'];
-    $cart->delete($cart_id);
+    $cart->deleteCart($cart_id);
     echo json_encode(array("message" => "Cart item is deleted."));
 }
 
